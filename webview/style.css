@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+body {
+    font-family: 'Outfit', sans-serif;
+    user-select: none;
+}
+
+.glass {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+.app-card {
+    transition: all 0.2s ease;
+}
+
+.app-card p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.app-card:hover {
+    transform: translateY(-2px);
+    border-color: #3b82f6;
+    background: rgba(30, 41, 59, 0.8);
+}
+
+/* Animación de la barra */
+.progress-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 99px;
+    overflow: hidden;
+    height: 8px;
+    width: 100%;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #3b82f6;
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 99px;
+}
+
+/* Tarjetas de paquetes instalados */
+.installed-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 12px;
+    transition: all 0.2s ease;
+}
+
+.installed-card:hover {
+    background: rgba(30, 41, 59, 0.6);
+    border-color: #10b981;
+    transform: translateX(-2px);
+}
