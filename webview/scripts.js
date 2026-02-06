@@ -36,7 +36,7 @@ async function realizarBusqueda() {
         // Estilo "Calmado": Fondo muy sutil, borde coloreado, texto coloreado, glow suave
         const actionContent = app.installed
             ? `<button onclick="iniciarDesinstalacion('${app.id}', '${app.safe_id}')" class="bg-red-500/10 hover:bg-red-500/20 border border-red-500/50 text-red-400 px-5 py-2 rounded-xl text-sm font-bold shadow-[0_0_10px_rgba(239,68,68,0.1)] hover:shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-all active:scale-95 w-32 flex items-center gap-2 justify-center backdrop-blur-md"><i class="fas fa-trash"></i> Eliminar</button>`
-            : `<button onclick="iniciarInstalacion('${app.id}', '${app.safe_id}')" class="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/50 text-blue-400 px-5 py-2 rounded-xl text-sm font-bold shadow-[0_0_10px_rgba(59,130,246,0.1)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all active:scale-95 w-32 backdrop-blur-md">Instalar</button>`;
+            : `<button onclick="iniciarInstalacion('${app.id}', '${app.safe_id}')" class="bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/50 text-purple-400 px-5 py-2 rounded-xl text-sm font-bold shadow-[0_0_10px_rgba(139,92,246,0.1)] hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all active:scale-95 w-32 backdrop-blur-md">Instalar</button>`;
 
         const iconHtml = app.icon
             ? `<img src="${app.icon}" class="w-12 h-12 rounded-lg object-contain bg-white/5 p-1" onerror="this.onerror=null; this.src=''; this.parentElement.innerHTML='<i class=\\'fas fa-microchip text-2xl text-slate-500\\'></i>';">`
@@ -73,7 +73,7 @@ function iniciarInstalacion(realId, safeId) {
     // Reemplazar botón por barra de progreso
     actionArea.innerHTML = `
         <div class="w-40 flex flex-col items-end">
-            <span id="status-text-${safeId}" class="text-[10px] text-blue-400 font-bold mb-1 uppercase tracking-wider">Iniciando...</span>
+            <span id="status-text-${safeId}" class="text-[10px] text-purple-400 font-bold mb-1 uppercase tracking-wider">Iniciando...</span>
             <div class="progress-container">
                 <div id="bar-${safeId}" class="progress-fill"></div>
             </div>
@@ -138,7 +138,7 @@ function finInstalacion(safeId, exito) {
         actualizarBarra(safeId, 100, 'Completado');
         setTimeout(() => {
             actionArea.innerHTML = `<button onclick="iniciarDesinstalacion('${safeId.replace(/_/g, '.')}', '${safeId}')" class="bg-red-500/10 hover:bg-red-500/20 border border-red-500/50 text-red-400 px-5 py-2 rounded-xl text-sm font-bold shadow-[0_0_10px_rgba(239,68,68,0.1)] hover:shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-all active:scale-95 w-32 flex items-center gap-2 justify-center backdrop-blur-md"><i class="fas fa-trash"></i> Eliminar</button>`;
-            document.getElementById(`card-${safeId}`).style.borderColor = "#10b981";
+            document.getElementById(`card-${safeId}`).style.borderColor = "#8b5cf6";
 
             // Recargar lista de paquetes instalados
             cargarPaquetesInstalados();
@@ -159,7 +159,7 @@ function finDesinstalacion(safeId, exito) {
         if (exito) {
             actualizarBarra(safeId, 100, 'Eliminado');
             setTimeout(() => {
-                actionArea.innerHTML = `<button onclick="iniciarInstalacion('${safeId.replace(/_/g, '.')}', '${safeId}')" class="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/50 text-blue-400 px-5 py-2 rounded-xl text-sm font-bold shadow-[0_0_10px_rgba(59,130,246,0.1)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all active:scale-95 w-32 backdrop-blur-md">Instalar</button>`;
+                actionArea.innerHTML = `<button onclick="iniciarInstalacion('${safeId.replace(/_/g, '.')}', '${safeId}')" class="bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/50 text-purple-400 px-5 py-2 rounded-xl text-sm font-bold shadow-[0_0_10px_rgba(139,92,246,0.1)] hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all active:scale-95 w-32 backdrop-blur-md">Instalar</button>`;
                 document.getElementById(`card-${safeId}`).style.borderColor = "rgba(255, 255, 255, 0.05)";
 
                 // Recargar lista de paquetes instalados
@@ -204,7 +204,7 @@ function finDesinstalacion(safeId, exito) {
                         <span class="text-[10px] text-slate-400">Ejecuta como administrador</span>
                     </div>
                     <button onclick="location.reload()" 
-                        class="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/50 text-blue-400 px-3 py-1.5 rounded-lg text-xs font-bold transition-all active:scale-95">
+                        class="bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/50 text-purple-400 px-3 py-1.5 rounded-lg text-xs font-bold transition-all active:scale-95">
                         <i class="fas fa-sync-alt"></i>
                     </button>
                 </div>

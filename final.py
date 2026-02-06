@@ -1,29 +1,35 @@
+# ---------------------------------------------------- #
+# Bibliotecas
 import bibliotecas as B
 from choco import gestionar_chocolatey
 from main import buscar_app_seguro
 import threading
 
+# ---------------------------------------------------- #
 # Configuración para ocultar ventanas de consola en Windows
-
 def obtener_startup_info():
-    if B.os.name == 'nt':
+    if B.os.name == 'nt':  # Si es Windows
         si = B.subprocess.STARTUPINFO()
         si.dwFlags |= B.subprocess.STARTF_USESHOWWINDOW
         return si
     return None
 
+# ---------------------------------------------------- #
 # Variables globales para mantener el estado
 _window = None
 choco_path = None
-installed_cache = set()
+installed_cache = set()  # Conjunto de paquetes instalados
 
+# ---------------------------------------------------- #
+# Funciones internas
+
+# Establece la referencia a la ventana de webview
 def set_window(window):
-    """Establece la referencia a la ventana de webview"""
     global _window
     _window = window
 
+# Carga aplicaciones instaladas para mostrar el estado correcto
 def _refresh_cache():
-    """Carga aplicaciones instaladas para mostrar el estado correcto"""
     global installed_cache
     try:
         # En Chocolatey 2.4.3+, "choco list" muestra solo paquetes locales por defecto
@@ -32,13 +38,18 @@ def _refresh_cache():
             ["choco", "list"], 
             capture_output=True, text=True, creationflags=B.subprocess.CREATE_NO_WINDOW
         )
+
         # Parsear el formato de salida: "nombrePaquete version"
         installed_cache = set()
+
         for line in res.stdout.splitlines():
             line = line.strip()
+
             # Saltar líneas de cabecera y footer
             if not line or line.startswith('Chocolatey') or 'packages installed' in line:
+                
                 continue
+
             # Extraer el nombre del paquete (primera palabra antes del espacio)
             parts = line.split()
             if parts:
@@ -50,12 +61,12 @@ def _refresh_cache():
 # Métodos llamados desde JS
 
 def refresh_installed(*args):
-    """Refresca la lista de paquetes instalados"""
+    # Refresca la lista de paquetes instalados
     _refresh_cache()
     return {"status": "success", "count": len(installed_cache)}
 
 def get_installed_packages(*args):
-    """Retorna la lista de paquetes instalados con detalles"""
+    # Retorna la lista de paquetes instalados con detalles
     try:
         # Usar "choco list" para obtener paquetes instalados con versiones
         res = B.subprocess.run(
@@ -90,7 +101,7 @@ def get_installed_packages(*args):
         return []
 
 def check_choco(*args):
-    """Verifica si Chocolatey está instalado y disponible"""
+    # Verifica si Chocolatey está instalado y disponible
     global choco_path
     choco_path = gestionar_chocolatey()
     if choco_path:
@@ -98,7 +109,7 @@ def check_choco(*args):
     return {"status": "error", "message": "Chocolatey no detectado"}
 
 def buscar(*args):
-    """Busca aplicaciones en Chocolatey"""
+    # Busca aplicaciones en Chocolatey
     # Extraer el query correcto (args[0] es self cuando se usa type())
     query = args[0] if len(args) == 1 else args[1] if len(args) > 1 else None
     print(f"[DEBUG] buscar() called with query: {query}, args: {args}")
@@ -135,7 +146,7 @@ def buscar(*args):
     return resultados
 
 def instalar(*args):
-    """Inicia la instalación de un paquete"""
+    # Inicia la instalación de un paquete
     # Extraer parámetros correctos
     pkg_id = args[0] if len(args) == 2 else args[1] if len(args) > 2 else None
     safe_id = args[1] if len(args) == 2 else args[2] if len(args) > 2 else None
@@ -147,7 +158,7 @@ def instalar(*args):
     threading.Thread(target=_proceso_instalacion, args=(pkg_id, safe_id), daemon=True).start()
 
 def desinstalar(*args):
-    """Desinstala un paquete y actualiza el cache"""
+    # Desinstala un paquete y actualiza el cache
     # Extraer parámetros correctos
     pkg_id = args[0] if len(args) == 2 else args[1] if len(args) > 2 else None
     safe_id = args[1] if len(args) == 2 else args[2] if len(args) > 2 else None
@@ -159,11 +170,11 @@ def desinstalar(*args):
     threading.Thread(target=_proceso_desinstalacion, args=(pkg_id, safe_id), daemon=True).start()
 
 def _proceso_instalacion(pkg_id, safe_id):
-    """Proceso de instalación de un paquete"""
+    # Proceso de instalación de un paquete
     global installed_cache
     try:
         cmd = [choco_path, "install", pkg_id, "-y", "--no-progress"]
-        
+
         process = B.subprocess.Popen(
             cmd, 
             stdout=B.subprocess.PIPE, 
@@ -195,11 +206,11 @@ def _proceso_instalacion(pkg_id, safe_id):
         _window.evaluate_js(f"finInstalacion('{safe_id}', false)")
 
 def _proceso_desinstalacion(pkg_id, safe_id):
-    """Proceso de desinstalación de un paquete"""
+    # Proceso de desinstalación de un paquete
     global installed_cache
     try:
         cmd = [choco_path, "uninstall", pkg_id, "-y", "--no-progress"]
-        
+
         process = B.subprocess.Popen(
             cmd, 
             stdout=B.subprocess.PIPE, 

@@ -19,7 +19,7 @@
                 <header class="flex items-center gap-4 mb-8 justify-between">
                     <div class="flex items-center gap-4 flex-1">
                         <div
-                            class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
+                            class="w-10 h-10 bg-purple-600/20 backdrop-blur-md border border-purple-500/30 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 shrink-0">
                             <i class="fas fa-microchip text-xl"></i>
                         </div>
                         <div class="flex-1">
@@ -43,14 +43,14 @@
                         class="w-full bg-transparent p-3 outline-none text-slate-200 placeholder:text-slate-500"
                         onkeypress="if(event.key === 'Enter') realizarBusqueda()">
                     <button onclick="realizarBusqueda()"
-                        class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-xl font-bold text-sm transition-all active:scale-95">
+                        class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-xl font-bold text-sm transition-all active:scale-95">
                         Buscar
                     </button>
                 </div>
             </div>
 
             <div id="loading" class="hidden flex justify-center py-10">
-                <i class="fas fa-circle-notch fa-spin text-blue-500 text-3xl"></i>
+                <i class="fas fa-circle-notch fa-spin text-purple-500 text-3xl"></i>
             </div>
 
             <div class="flex-1 overflow-y-auto custom-scrollbar px-6 pt-2 pb-6">

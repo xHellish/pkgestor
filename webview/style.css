@@ -8,7 +8,22 @@ body {
 .glass {
     background: rgba(30, 41, 59, 0.6);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+/* Estilos unificados para todos los botones */
+button {
+    backdrop-filter: blur(10px) !important;
+    background: rgba(139, 92, 246, 0.2) !important;
+    border: 1px solid rgba(139, 92, 246, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+button:hover {
+    backdrop-filter: blur(16px) !important;
+    background: rgba(139, 92, 246, 0.4) !important;
+    border-color: rgba(139, 92, 246, 0.6) !important;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3) !important;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -36,8 +51,9 @@ body {
 
 .app-card:hover {
     transform: translateY(-2px);
-    border-color: #3b82f6;
+    border-color: #8b5cf6;
     background: rgba(30, 41, 59, 0.8);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.2);
 }
 
 /* Animación de la barra */
@@ -51,10 +67,11 @@ body {
 
 .progress-fill {
     height: 100%;
-    background: #3b82f6;
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
     width: 0%;
     transition: width 0.5s ease;
     border-radius: 99px;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
 }
 
 /* Tarjetas de paquetes instalados */
@@ -69,6 +86,7 @@ body {
 
 .installed-card:hover {
     background: rgba(30, 41, 59, 0.6);
-    border-color: #10b981;
+    border-color: #8b5cf6;
     transform: translateX(-2px);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
 }
